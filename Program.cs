@@ -83,20 +83,24 @@
         
         static int StringReplace(string s)
         {
-            string curr = s;
-            string prev = s;
+            // can try stack data structure for better optimzation. 
+            Stack<char> stack = new();
 
-            while (true)
+            foreach(char c in s)
             {
-                curr = curr.Replace("AB", "").Replace("CD", "");
-                if (curr == prev)
+                if (stack.Count > 0)
                 {
-                    break;
-                }
-                prev = curr;
+                    char top = stack.Peek();
 
+                    if ((top == 'A' && c == 'B') || (top == 'C' && c == 'D')) {
+                        stack.Pop();
+                        continue;
+                    }
+                }
+                stack.Push(c);
             }
-            return curr.Length;
+            return stack.Count();
+
         }
     }
 }
